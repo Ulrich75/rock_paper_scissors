@@ -20,21 +20,62 @@ function getHumanChoice() {
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === "rock" && computerChoice === "scissors")
-        return { text: "You win! Rock beats Scissors", humanScore: 1 };
+        return { text: "You win! Rock beats Scissors", score : {humanScore: 1, computerScore : 0}};
     if (humanChoice === "scissors" && computerChoice === "rock")
-        return { text: "You lose! Rock beats Scissors", computerScore: 1 };
+        return { text: "You lose! Rock beats Scissors",score :{ humanScore: 0, computerScore : 1}};
     if (humanChoice === "paper" && computerChoice === "rock")
-        return { text: "You win! Paper beats Rock", humanScore: 1 };
+        return { text: "You win! Paper beats Rock", score : {humanScore: 1, computerScore : 0}};
     if (humanChoice === "rock" && computerChoice === "paper")
-        return { text: "You lose! Paper beats Rock", computerScore: 1 };
+        return { text: "You lose! Paper beats Rock", score : {humanScore: 0, computerScore : 1}};
     if (humanChoice === "scissors" && computerChoice === "paper")
-        return { text: "You win! Scissors beats Paper", humanScore: 1 };
+        return { text: "You win! Scissors beats Paper", score : {humanScore: 1, computerScore : 0} };
     if (humanChoice === "paper" && computerChoice === "scissors")
-        return { text: "You lose! Scissors beats Paper", computerScore: 1 };
-    return { text: `It's a draw! You both chose ${computerChoice}` };
+        return { text: "You lose! Scissors beats Paper", score : {humanScore: 0, computerScore : 1}};
+    return { text: `It's a draw! You both chose ${computerChoice}` ,score : {humanScore: 0, computerScore : 0}};
 }
 
-function playGame() {
+function playGame(event){
+    const computerSelection = getComputerChoice(getRandomInt(3));
+    const humanSelection = event.target.id;
+    let result = playRound(humanSelection, computerSelection);
+    const resultat = document.querySelector("#result")
+    const scores = document.querySelector("#scores");
+
+    const div = document.querySelector("#container")
+    const div1 = document.querySelector("#container1")
+
+    resultat.textContent = result.text
+    scores.textContent = `Human: ${result.score.humanScore} | Computer: ${result.score.computerScore}`;
+    div.appendChild(resultat)
+    div1.appendChild(scores)
+   
+}
+
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+  button.addEventListener("click",playGame)
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
@@ -61,5 +102,4 @@ function playGame() {
     }
 
     console.log(`Scores finaux : Humain - ${humanScore}, Ordinateur - ${computerScore}`);
-}
-playGame()
+} */
